@@ -3,18 +3,19 @@ Word lenght = 32bit
 2^64 max lenght of input message to convert
 returns a digest of 256 bit
 
-dimension of blocks = 512 bit
+dimension of each block = 512 bit
 
 BITWISE OPERATIONS: 
 >> and << = are binary bitwise operators used to shift the bits to a specified direction for a number of positions. 
 ~ = Complement operation on bits.
 & = And operation on bits.
 | = OR operation on bits.
+^ = XOR operation on bits.
 
 TYPES OF VARIABLES:
 unsigned type = it doesn't have the bit that identifies the sign, so it can be only positive or zero, BUT NOT NEGATIVE.
 uint32_t = Integer of 32 bit (2^32 max value)
-uint8_t = unsigned char, used to store chars. Each char has a value of 8 bit.
+uint8_t = unsigned char, used to store a char. A char has a value of 8 bit (that's why its called uint8_t).
 
 OTHER MATHS FUNCTIONS FOR THE ALGORITHM:
 Located in the "utils.h" file.
