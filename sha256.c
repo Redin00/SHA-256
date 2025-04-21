@@ -75,11 +75,11 @@ uint8_t* paddingMessage(uint8_t* message, size_t lenght, size_t* paddedLenght){
 
     // Copying the original message to the new padded message. We're using the memcpy function to alloc the exact amount of memory needed.
     memcpy(paddedMessage, message, lenght);
-    paddedMessage[lenght] = 0x80;   // Adding the '1' bit at the end of the message, because the others are already '0'.
+    paddedMessage[lenght] = 0x80;   // Adding the '1' bit at the end of the ORIGINAL message, because 0x80 is a value of 8 bit with the first bit at '1'
     memset(paddedMessage + lenght + 1, 0, newLenght - (lenght + 1) - 8);    // Filling with zeros
 
     // Lenght of the original message expressed with a 64 big endian and in bits.
-    uint64_t BigEndianLenght = lenght * 8;  // We multiply for 8 because lenght is referred to an uint8_t.
+    uint64_t BigEndianLenght = lenght * 8;  // We multiply for 8 because we want the lenght in BITS and not in bytes 
 
     // Appending the 64-bit big endian
     for(int i=0; i<8; i++){
