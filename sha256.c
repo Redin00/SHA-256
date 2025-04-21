@@ -57,15 +57,14 @@ int main(){
 // Function for padding the message as stated by the SHA-256 standard.
 uint8_t* paddingMessage(uint8_t* message, size_t lenght, size_t* paddedLenght){
 
-    // This functions calculates the lenght of the padded message, and the creates a new unsigned char* message for containing the padded message. 
-    // Then, with memory functions, the original message is copied inside the new message, and at the end a bit '1' is added. Other bits are already '0'.
+    // Padding the message by adding a bit '1' followed by zero bits to get a message with a fixed size (read the documentation that provides a more specific explanation) 
 
     size_t newLenght = lenght + 1;  // Adding 1 byte for 0x80 value, because in SHA-256 padding involves adding a "1 bit" followed by zero bits.
     while(newLenght % 64 != 56){
         newLenght++;
     }
 
-    *paddedLenght = newLenght + 8;  // Adding 8 bytes for lenght for the 64 big endian.
+    *paddedLenght = newLenght + 8;  // Adding 8 bytes of lenght for the 64 big endian.
 
     // Creating the variable (unsigned char = uint8_t) for containing the padded message and allocating the necessary size.
     uint8_t* paddedMessage = (uint8_t*)malloc(*paddedLenght);
@@ -147,7 +146,7 @@ void sha256(uint8_t* message, size_t lenght, uint8_t hash[32]){
     
     size_t paddedLenght;    
 
-    // Initial hash values used for the conversion, retrieved by the first 32 of the decimal part of square roots of the first eight natural prime numbers.
+    // Initial hash values used for the conversion, retrieved by the first 32 bit of the decimal part of the square root of the first eight natural prime numbers.
     uint32_t H[8] = {
         0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19,
     };
@@ -155,7 +154,7 @@ void sha256(uint8_t* message, size_t lenght, uint8_t hash[32]){
     // Padding the message
     uint8_t* paddedMessage = paddingMessage(message, lenght, &paddedLenght);        // By passing the address of paddedLenght, we can modify it directly inside the function paddingMessage.
 
-    // Dividing the message in blocks. 
+    // Splitting the message into N blocks. 
     /*
      * In SHA-256, the message is divided into N blocks of 512 bit. The block can also  be expressed as sixteen 32-bit words. 
     */
@@ -163,6 +162,8 @@ void sha256(uint8_t* message, size_t lenght, uint8_t hash[32]){
         processingBlock(paddedMessage + i, H);
     }
 
+    
+    // Final operation 
     for(int i=0; i<8; i++){
 
         hash[i * 4] = (H[i] >> 24 ) & 0xff;     // "& 0xff" returns the bits, because 0xff is a sequence of bit with all '1'.
