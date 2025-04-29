@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-// ------- Header for functions of SHA-256 -------  
+// ------- Header for particular math functions and bitwise operations of SHA-256 -------  
 
 uint32_t Ch(uint32_t x, uint32_t y, uint32_t z){
     return (x & y) ^ (~x & z);
